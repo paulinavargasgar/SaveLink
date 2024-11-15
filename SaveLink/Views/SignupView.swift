@@ -52,7 +52,7 @@ struct SignupView: View {
                     if(email.count != 0) {
                         
                         Image(systemName: email.isValidEmail() ? "checkmark" : "xmark")
-                            .fontWeight(.bold)
+                            //.fontWeight(.bold)
                             .foregroundColor(email.isValidEmail() ? .green : .red)
                     }
                     
@@ -78,7 +78,7 @@ struct SignupView: View {
                     if(password.count != 0) {
                         
                         Image(systemName: isValidPassword(password) ? "checkmark" : "xmark")
-                            .fontWeight(.bold)
+                            //.fontWeight(.bold)
                             .foregroundColor(isValidPassword(password) ? .green : .red)
                     }
                     

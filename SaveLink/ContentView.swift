@@ -8,9 +8,22 @@
 // ContentView = Nuestra pantalla Main (es la que se muestra al autenticarse cómo usuario).
 
 
+//
+//  ContentView.swift
+//  SaveLink
+//
+//  Created by Paulina on 13/11/24.
+//
+
 import SwiftUI
 import FirebaseAuth
 import MapKit
+
+struct GasStationAnnotation: Identifiable {
+    let id = UUID()
+    let title: String
+    let coordinate: CLLocationCoordinate2D
+}
 
 struct ContentView: View {
     
@@ -19,7 +32,8 @@ struct ContentView: View {
         center: CLLocationCoordinate2D(latitude: 19.4326, longitude: -99.1332),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
-    
+    @State private var gasStationCoordinates: [GasStationAnnotation] = []
+
     // Color personalizado usando RGB
     let Color_Verde_Fuerte = Color(red: 0 / 255, green: 92 / 255, blue: 83 / 255)
     
@@ -28,8 +42,11 @@ struct ContentView: View {
             AuthView()
         } else {
             ZStack {
-                Map(coordinateRegion: $region)
-                    .edgesIgnoringSafeArea(.all)
+                // Mapa con los pines
+                Map(coordinateRegion: $region, annotationItems: gasStationCoordinates) { pin in
+                    MapPin(coordinate: pin.coordinate, tint: .red)
+                }
+                .edgesIgnoringSafeArea(.all)
                 
                 // Bienvenida en la esquina superior derecha
                 VStack {
@@ -75,16 +92,43 @@ struct ContentView: View {
                         }
                         Spacer()
                     }
-                    //.padding()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 60) // Ajusta la altura de la barra inferior
+                    .frame(height: 60)
                     .background(Color_Verde_Fuerte)
                     .edgesIgnoringSafeArea(.bottom)
                 }
                 .frame(maxHeight: .infinity, alignment: .bottom)
             }
+            .onAppear {
+                loadGasStations()
+            }
         }
     }
+    
+    // Función para cargar las direcciones de las gasolineras y geocodificarlas
+    func loadGasStations() {
+        let addresses = CSVReader.parseCSV(fileName: "Precios") // Asegúrate de usar el nombre correcto del archivo CSV
+        
+        print("Direcciones cargadas del CSV:")
+        print(addresses) // Para ver qué direcciones se están obteniendo
+        
+        for address in addresses {
+            GeocoderHelper.geocodeAddress(address: address) { coordinate in
+                if let coordinate = coordinate {
+                    print("Dirección geocodificada: \(address) -> \(coordinate)")
+                    let annotation = GasStationAnnotation(title: address, coordinate: coordinate)
+
+                    DispatchQueue.main.async {
+                        gasStationCoordinates.append(annotation)
+                    }
+                } else {
+                    print("No se pudo geocodificar la dirección: \(address)")
+                }
+            }
+        }
+    }
+    
+
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -92,3 +136,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+

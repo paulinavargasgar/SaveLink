@@ -19,6 +19,9 @@
 		40CA2FA12CE4784A0072EA5E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CA2FA02CE4784A0072EA5E /* ContentView.swift */; };
 		40CA2FA32CE4784D0072EA5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40CA2FA22CE4784D0072EA5E /* Assets.xcassets */; };
 		40CA2FA62CE4784D0072EA5E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40CA2FA52CE4784D0072EA5E /* Preview Assets.xcassets */; };
+		8E7466A82CE720A800F9D519 /* CSVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466A72CE720A700F9D519 /* CSVReader.swift */; };
+		8E7466AC2CE7218100F9D519 /* GeoCoderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466AB2CE7218100F9D519 /* GeoCoderHelper.swift */; };
+		8E7466AE2CEB1D4A00F9D519 /* Precios.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466AD2CEB1D4900F9D519 /* Precios.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		40CA2FA02CE4784A0072EA5E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40CA2FA22CE4784D0072EA5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40CA2FA52CE4784D0072EA5E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8E7466A72CE720A700F9D519 /* CSVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVReader.swift; sourceTree = "<group>"; };
+		8E7466AB2CE7218100F9D519 /* GeoCoderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderHelper.swift; sourceTree = "<group>"; };
+		8E7466AD2CEB1D4900F9D519 /* Precios.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Precios.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,7 @@
 		40CA2F922CE4784A0072EA5E = {
 			isa = PBXGroup;
 			children = (
+				8E7466AD2CEB1D4900F9D519 /* Precios.csv */,
 				40CA2F9D2CE4784A0072EA5E /* SaveLink */,
 				40CA2F9C2CE4784A0072EA5E /* Products */,
 			);
@@ -92,6 +99,8 @@
 				40CA2FA02CE4784A0072EA5E /* ContentView.swift */,
 				40CA2FA22CE4784D0072EA5E /* Assets.xcassets */,
 				40CA2FA42CE4784D0072EA5E /* Preview Content */,
+				8E7466A72CE720A700F9D519 /* CSVReader.swift */,
+				8E7466AB2CE7218100F9D519 /* GeoCoderHelper.swift */,
 			);
 			path = SaveLink;
 			sourceTree = "<group>";
@@ -172,6 +181,7 @@
 			files = (
 				402194582CE55361003FA188 /* GoogleService-Info.plist in Resources */,
 				40CA2FA62CE4784D0072EA5E /* Preview Assets.xcassets in Resources */,
+				8E7466AE2CEB1D4A00F9D519 /* Precios.csv in Resources */,
 				40CA2FA32CE4784D0072EA5E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +199,8 @@
 				40641D7D2CE55618009746E5 /* String.swift in Sources */,
 				40CA2F9F2CE4784A0072EA5E /* SaveLinkApp.swift in Sources */,
 				40641D7F2CE55693009746E5 /* SignupView.swift in Sources */,
+				8E7466A82CE720A800F9D519 /* CSVReader.swift in Sources */,
+				8E7466AC2CE7218100F9D519 /* GeoCoderHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

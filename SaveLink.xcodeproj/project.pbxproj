@@ -22,6 +22,8 @@
 		8E7466A82CE720A800F9D519 /* CSVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466A72CE720A700F9D519 /* CSVReader.swift */; };
 		8E7466AC2CE7218100F9D519 /* GeoCoderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466AB2CE7218100F9D519 /* GeoCoderHelper.swift */; };
 		8E7466AE2CEB1D4A00F9D519 /* Precios.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466AD2CEB1D4900F9D519 /* Precios.csv */; };
+		8E7466B02CECFF3600F9D519 /* Gasolineras.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */; };
+		8E7466B22CED085700F9D519 /* direcciones_limpias.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466B12CED085700F9D519 /* direcciones_limpias.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		8E7466A72CE720A700F9D519 /* CSVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVReader.swift; sourceTree = "<group>"; };
 		8E7466AB2CE7218100F9D519 /* GeoCoderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderHelper.swift; sourceTree = "<group>"; };
 		8E7466AD2CEB1D4900F9D519 /* Precios.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Precios.csv; sourceTree = "<group>"; };
+		8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gasolineras.csv; sourceTree = "<group>"; };
+		8E7466B12CED085700F9D519 /* direcciones_limpias.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = direcciones_limpias.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 		40CA2F922CE4784A0072EA5E = {
 			isa = PBXGroup;
 			children = (
+				8E7466B12CED085700F9D519 /* direcciones_limpias.csv */,
+				8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */,
 				8E7466AD2CEB1D4900F9D519 /* Precios.csv */,
 				40CA2F9D2CE4784A0072EA5E /* SaveLink */,
 				40CA2F9C2CE4784A0072EA5E /* Products */,
@@ -182,7 +188,9 @@
 				402194582CE55361003FA188 /* GoogleService-Info.plist in Resources */,
 				40CA2FA62CE4784D0072EA5E /* Preview Assets.xcassets in Resources */,
 				8E7466AE2CEB1D4A00F9D519 /* Precios.csv in Resources */,
+				8E7466B02CECFF3600F9D519 /* Gasolineras.csv in Resources */,
 				40CA2FA32CE4784D0072EA5E /* Assets.xcassets in Resources */,
+				8E7466B22CED085700F9D519 /* direcciones_limpias.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

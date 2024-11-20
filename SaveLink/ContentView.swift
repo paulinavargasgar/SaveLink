@@ -45,6 +45,7 @@ struct ContentView: View {
                 // Mapa con los pines
                 Map(coordinateRegion: $region, annotationItems: gasStationCoordinates) { pin in
                     MapPin(coordinate: pin.coordinate, tint: .red)
+                    
                 }
                 .edgesIgnoringSafeArea(.all)
                 
@@ -107,27 +108,54 @@ struct ContentView: View {
     
     // Función para cargar las direcciones de las gasolineras y geocodificarlas
     func loadGasStations() {
-        let addresses = CSVReader.parseCSV(fileName: "Precios") // Asegúrate de usar el nombre correcto del archivo CSV
+        let addresses = CSVReader.parseCSV(fileName: "direcciones_limpias") // Asegúrate de usar el nombre correcto del archivo CSV
+
+        //print("Direcciones cargadas del CSV:")
+        //print(addresses)
+
+        // Conjunto para evitar duplicados (almacena direcciones únicas)
+        var uniqueCoordinates = Set<String>() // Usaremos un hash basado en la latitud y longitud como clave
         
-        print("Direcciones cargadas del CSV:")
-        print(addresses) // Para ver qué direcciones se están obteniendo
-        
+        // Contador para saber cuántas direcciones han sido procesadas
+        var processedCount = 0
+        let totalAddresses = addresses.count
+
         for address in addresses {
             GeocoderHelper.geocodeAddress(address: address) { coordinate in
                 if let coordinate = coordinate {
-                    print("Dirección geocodificada: \(address) -> \(coordinate)")
-                    let annotation = GasStationAnnotation(title: address, coordinate: coordinate)
+                    let coordinateKey = "\(coordinate.latitude),\(coordinate.longitude)"
+                    
+                    // Verificar si la coordenada ya está en el conjunto
+                    if !uniqueCoordinates.contains(coordinateKey) {
+                        uniqueCoordinates.insert(coordinateKey)
+                        
+                        //print("Dirección geocodificada: \(address) -> \(coordinate)")
+                        let annotation = GasStationAnnotation(title: address, coordinate: coordinate)
+                        //print("ID del pin generado: \(annotation.id)")
 
-                    DispatchQueue.main.async {
-                        gasStationCoordinates.append(annotation)
+
+                        DispatchQueue.main.async {
+                            gasStationCoordinates.append(annotation)
+                        }
+                    } else {
+                        //print("Dirección duplicada ignorada: \(address)")
                     }
                 } else {
                     print("No se pudo geocodificar la dirección: \(address)")
                 }
+
+                // Incrementar el contador de procesados
+                processedCount += 1
+                if processedCount == totalAddresses {
+                    DispatchQueue.main.async {
+                        print("Número total de pines únicos cargados: \(gasStationCoordinates.count)")
+                    }
+                }
             }
         }
     }
-    
+
+
 
 }
 

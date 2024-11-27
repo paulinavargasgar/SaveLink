@@ -33,6 +33,7 @@ struct ContentView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     @State private var gasStationCoordinates: [GasStationAnnotation] = []
+    @State private var showUserInfo = false
 
     // Color personalizado usando RGB
     let Color_Verde_Fuerte = Color(red: 0 / 255, green: 92 / 255, blue: 83 / 255)
@@ -71,17 +72,20 @@ struct ContentView: View {
                         Button(action: {
                             // Acción para botón de inicio
                         }) {
-                            Image(systemName: "house")
+                            Image(systemName: "map")
                                 .font(.system(size: 24))
                                 .foregroundColor(.white)
                         }
                         Spacer()
                         Button(action: {
-                            // Acción para botón de mapa
+                            showUserInfo = true
                         }) {
-                            Image(systemName: "map")
+                            Image(systemName: "person.crop.circle")
                                 .font(.system(size: 24))
                                 .foregroundColor(.white)
+                        }
+                        .sheet(isPresented: $showUserInfo) {
+                            UserInfoView(userID: userID, showUserInfo: $showUserInfo)
                         }
                         Spacer()
                         Button(action: {
@@ -154,8 +158,6 @@ struct ContentView: View {
             }
         }
     }
-
-
 
 }
 

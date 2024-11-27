@@ -24,6 +24,7 @@
 		8E7466AE2CEB1D4A00F9D519 /* Precios.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466AD2CEB1D4900F9D519 /* Precios.csv */; };
 		8E7466B02CECFF3600F9D519 /* Gasolineras.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */; };
 		8E7466B22CED085700F9D519 /* direcciones_limpias.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466B12CED085700F9D519 /* direcciones_limpias.csv */; };
+		8E7466B42CF6892400F9D519 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466B32CF6892400F9D519 /* UserInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		8E7466AD2CEB1D4900F9D519 /* Precios.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Precios.csv; sourceTree = "<group>"; };
 		8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gasolineras.csv; sourceTree = "<group>"; };
 		8E7466B12CED085700F9D519 /* direcciones_limpias.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = direcciones_limpias.csv; sourceTree = "<group>"; };
+		8E7466B32CF6892400F9D519 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				40641D7E2CE55693009746E5 /* SignupView.swift */,
 				40641D802CE556AC009746E5 /* AuthView.swift */,
 				4021943B2CE50851003FA188 /* LoginView.swift */,
+				8E7466B32CF6892400F9D519 /* UserInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7466B42CF6892400F9D519 /* UserInfoView.swift in Sources */,
 				4021943C2CE50851003FA188 /* LoginView.swift in Sources */,
 				40CA2FA12CE4784A0072EA5E /* ContentView.swift in Sources */,
 				40641D812CE556AC009746E5 /* AuthView.swift in Sources */,

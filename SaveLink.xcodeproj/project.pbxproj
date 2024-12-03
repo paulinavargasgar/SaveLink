@@ -25,6 +25,8 @@
 		8E7466B02CECFF3600F9D519 /* Gasolineras.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */; };
 		8E7466B22CED085700F9D519 /* direcciones_limpias.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8E7466B12CED085700F9D519 /* direcciones_limpias.csv */; };
 		8E7466B42CF6892400F9D519 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466B32CF6892400F9D519 /* UserInfoView.swift */; };
+		8E7466B72CFE538200F9D519 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 8E7466B62CFE538200F9D519 /* GoogleMaps */; };
+		8E7466BB2CFE88FF00F9D519 /* FilterCSVPrices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7466BA2CFE88FE00F9D519 /* FilterCSVPrices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,7 @@
 		8E7466AF2CECFF3600F9D519 /* Gasolineras.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gasolineras.csv; sourceTree = "<group>"; };
 		8E7466B12CED085700F9D519 /* direcciones_limpias.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = direcciones_limpias.csv; sourceTree = "<group>"; };
 		8E7466B32CF6892400F9D519 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
+		8E7466BA2CFE88FE00F9D519 /* FilterCSVPrices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCSVPrices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7466B72CFE538200F9D519 /* GoogleMaps in Frameworks */,
 				4021945B2CE55440003FA188 /* FirebaseAnalytics in Frameworks */,
 				4021945D2CE55440003FA188 /* FirebaseAuth in Frameworks */,
 				4021945F2CE55440003FA188 /* FirebaseFirestore in Frameworks */,
@@ -110,6 +114,7 @@
 				40CA2FA42CE4784D0072EA5E /* Preview Content */,
 				8E7466A72CE720A700F9D519 /* CSVReader.swift */,
 				8E7466AB2CE7218100F9D519 /* GeoCoderHelper.swift */,
+				8E7466BA2CFE88FE00F9D519 /* FilterCSVPrices.swift */,
 			);
 			path = SaveLink;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 				4021945A2CE55440003FA188 /* FirebaseAnalytics */,
 				4021945C2CE55440003FA188 /* FirebaseAuth */,
 				4021945E2CE55440003FA188 /* FirebaseFirestore */,
+				8E7466B62CFE538200F9D519 /* GoogleMaps */,
 			);
 			productName = SaveLink;
 			productReference = 40CA2F9B2CE4784A0072EA5E /* SaveLink.app */;
@@ -173,6 +179,7 @@
 			mainGroup = 40CA2F922CE4784A0072EA5E;
 			packageReferences = (
 				402194592CE55440003FA188 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8E7466B52CFE538200F9D519 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 			);
 			productRefGroup = 40CA2F9C2CE4784A0072EA5E /* Products */;
 			projectDirPath = "";
@@ -212,6 +219,7 @@
 				40CA2F9F2CE4784A0072EA5E /* SaveLinkApp.swift in Sources */,
 				40641D7F2CE55693009746E5 /* SignupView.swift in Sources */,
 				8E7466A82CE720A800F9D519 /* CSVReader.swift in Sources */,
+				8E7466BB2CFE88FF00F9D519 /* FilterCSVPrices.swift in Sources */,
 				8E7466AC2CE7218100F9D519 /* GeoCoderHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +433,14 @@
 				kind = branch;
 			};
 		};
+		8E7466B52CFE538200F9D519 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -442,6 +458,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 402194592CE55440003FA188 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		8E7466B62CFE538200F9D519 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E7466B52CFE538200F9D519 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

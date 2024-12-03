@@ -1,7 +1,3 @@
-//  ContentView.swift
-//  SaveLink
-//  Created by Paulina on 13/11/24.
-
 import SwiftUI
 import FirebaseAuth
 import MapKit
@@ -17,6 +13,7 @@ struct GasStationAnnotation: Identifiable {
     let id = UUID()
     let title: String
     let coordinate: CLLocationCoordinate2D
+    let pricePerLiter: Double // Precio por litro agregado
 }
 
 struct GasStationDetailView: View {
@@ -35,6 +32,16 @@ struct GasStationDetailView: View {
                     .font(.headline)
                 Spacer()
                 Text(String(format: "%.1f", globalRating))
+                    .font(.title)
+                    .bold()
+            }
+            .padding()
+
+            HStack {
+                Text("Precio por litro:")
+                    .font(.headline)
+                Spacer()
+                Text(String(format: "$%.2f MXN", gasStation.pricePerLiter))
                     .font(.title)
                     .bold()
             }
@@ -194,7 +201,7 @@ struct ContentView: View {
                     if !uniqueCoordinates.contains(coordinateKey) {
                         uniqueCoordinates.insert(coordinateKey)
 
-                        let annotation = GasStationAnnotation(title: address, coordinate: coordinate)
+                        let annotation = GasStationAnnotation(title: address, coordinate: coordinate, pricePerLiter: Double.random(in: 18.0...24.0))
 
                         DispatchQueue.main.async {
                             gasStationCoordinates.append(annotation)

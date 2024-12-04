@@ -13,8 +13,9 @@ struct GasStationAnnotation: Identifiable {
     let id = UUID()
     let title: String
     let coordinate: CLLocationCoordinate2D
-    let pricePerLiter: Double // Precio por litro agregado
+    let prices: [String: Double] // Diccionario para almacenar precios por tipo de combustible
 }
+
 
 struct GasStationDetailView: View {
     let gasStation: GasStationAnnotation
@@ -37,13 +38,16 @@ struct GasStationDetailView: View {
             }
             .padding()
 
-            HStack {
-                Text("Precio por litro:")
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Precios por litro:")
                     .font(.headline)
-                Spacer()
-                Text(String(format: "$%.2f MXN", gasStation.pricePerLiter))
-                    .font(.title)
-                    .bold()
+                ForEach(gasStation.prices.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key):")
+                        Spacer()
+                        Text(String(format: "$%.2f MXN", value))
+                    }
+                }
             }
             .padding()
 
@@ -78,8 +82,9 @@ struct GasStationDetailView: View {
     }
 }
 
-struct ContentView: View {
 
+struct ContentView: View {
+    
     @AppStorage("uid") var userID: String = ""
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 19.4326, longitude: -99.1332),
@@ -91,7 +96,7 @@ struct ContentView: View {
     @State private var selectedFuelType: String = "Premium" // Premium por defecto
     
     let Color_Verde_Fuerte = Color(red: 0 / 255, green: 92 / 255, blue: 83 / 255)
-
+    
     var body: some View {
         if userID == "" {
             AuthView()
@@ -126,7 +131,7 @@ struct ContentView: View {
                         }
                     }
                     .edgesIgnoringSafeArea(.all)
-
+                    
                     VStack {
                         HStack {
                             Spacer()
@@ -179,7 +184,7 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.bottom)
                     }
                     .frame(maxHeight: .infinity, alignment: .bottom)
-
+                    
                     if showMenu {
                         VStack {
                             HStack {
@@ -212,19 +217,24 @@ struct ContentView: View {
                                 }
                             }
                             .padding()
-
+                            
                             List(gasStationCoordinates) { station in
                                 HStack {
                                     Text(station.title)
                                     Spacer()
-                                    Text(String(format: "$%.2f", station.pricePerLiter)) // Usar precio por tipo
+                                    if let price = station.prices[selectedFuelType] {
+                                        Text(String(format: "$%.2f", price))
+                                    } else {
+                                        Text("N/A")
+                                    }
                                 }
                             }
+
                             .background(Color.white)
                             .cornerRadius(12)
                             .padding()
                             .shadow(radius: 5)
-
+                            
                             Button(action: {
                                 withAnimation {
                                     showMenu = false
@@ -249,24 +259,36 @@ struct ContentView: View {
             }
         }
     }
-
+    
     func loadGasStations() {
         let addresses = CSVReader.parseCSV(fileName: "direcciones_limpias")
+        
+        let premiumPrices: [Double] = [26.99, 26.29, 25.99, 23.98, 25.79, 26.59, 25.49, 24.5, 26.99, 25.60, 23.42, 24.69, 25.75, 24.89]
+        let magnaPrices: [Double] = [24.99, 22.89, 24.79, 24.09, 24.49, 22.98, 23.99, 24.29, 23.49, 22.80, 23.90, 23.14, 23.85]
+        let dieselPrices: [Double] = [24.64, 24.99, 24.90, 24.81, 24.89, 24.79]
 
+        
         var uniqueCoordinates = Set<String>()
         var processedCount = 0
         let totalAddresses = addresses.count
-
+        
         for address in addresses {
             GeocoderHelper.geocodeAddress(address: address) { coordinate in
                 if let coordinate = coordinate {
                     let coordinateKey = "\(coordinate.latitude),\(coordinate.longitude)"
-
+                    
                     if !uniqueCoordinates.contains(coordinateKey) {
                         uniqueCoordinates.insert(coordinateKey)
-
-                        let annotation = GasStationAnnotation(title: address, coordinate: coordinate, pricePerLiter: Double.random(in: 18.0...24.0))
-
+                        
+                        // Generar precios aleatorios para cada tipo
+                        let prices = [
+                            "Premium": premiumPrices.randomElement() ?? 20.0,
+                            "Magna": magnaPrices.randomElement() ?? 18.0,
+                            "Diesel": dieselPrices.randomElement() ?? 22.0
+                        ]
+                        
+                        let annotation = GasStationAnnotation(title: address, coordinate: coordinate, prices: prices)
+                        
                         DispatchQueue.main.async {
                             gasStationCoordinates.append(annotation)
                         }
@@ -274,7 +296,7 @@ struct ContentView: View {
                 } else {
                     print("No se pudo geocodificar la dirección: \(address)")
                 }
-
+                
                 processedCount += 1
                 if processedCount == totalAddresses {
                     DispatchQueue.main.async {

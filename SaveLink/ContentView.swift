@@ -88,6 +88,7 @@ struct ContentView: View {
     @State private var gasStationCoordinates: [GasStationAnnotation] = []
     @State private var showUserInfo = false
     @State private var showMenu = false
+    @State private var selectedFuelType: String = "Premium" // Premium por defecto
     
     let Color_Verde_Fuerte = Color(red: 0 / 255, green: 92 / 255, blue: 83 / 255)
 
@@ -178,6 +179,69 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.bottom)
                     }
                     .frame(maxHeight: .infinity, alignment: .bottom)
+
+                    if showMenu {
+                        VStack {
+                            HStack {
+                                Button(action: {
+                                    selectedFuelType = "Premium"
+                                }) {
+                                    Text("Premium")
+                                        .padding()
+                                        .background(selectedFuelType == "Premium" ? Color.blue : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                }
+                                Button(action: {
+                                    selectedFuelType = "Magna"
+                                }) {
+                                    Text("Magna")
+                                        .padding()
+                                        .background(selectedFuelType == "Magna" ? Color.blue : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                }
+                                Button(action: {
+                                    selectedFuelType = "Diesel"
+                                }) {
+                                    Text("Diesel")
+                                        .padding()
+                                        .background(selectedFuelType == "Diesel" ? Color.blue : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                }
+                            }
+                            .padding()
+
+                            List(gasStationCoordinates) { station in
+                                HStack {
+                                    Text(station.title)
+                                    Spacer()
+                                    Text(String(format: "$%.2f", station.pricePerLiter)) // Usar precio por tipo
+                                }
+                            }
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .padding()
+                            .shadow(radius: 5)
+
+                            Button(action: {
+                                withAnimation {
+                                    showMenu = false
+                                }
+                            }) {
+                                Text("Regresar")
+                                    .font(.headline)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.red)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(8)
+                                    .padding(.horizontal)
+                            }
+                        }
+                        .transition(.move(edge: .trailing))
+                    }
                 }
                 .onAppear {
                     loadGasStations()
@@ -221,6 +285,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

@@ -21,6 +21,7 @@ struct GasStationDetailView: View {
     let gasStation: GasStationAnnotation
     let globalRating: Double
     let reviews: [UserReview]
+    
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -88,7 +89,7 @@ struct UserProfileView: View {
     let userReviews: [UserReview] // Opiniones realizadas por el usuario
     @Binding var isPresented: Bool // Controla la presentación de la vista
     @AppStorage("uid") var userID: String = "" // Para manejar la sesión del usuario
-
+    @State private var sortOrder: Bool = true // true: Ascendente, false: Descendente
     var body: some View {
         NavigationView {
             VStack {
@@ -181,7 +182,8 @@ struct ContentView: View {
     @State private var showUserInfo = false
     @State private var showMenu = false
     @State private var selectedFuelType: String = "Premium" // Premium por defecto
-    @State private var searchText: String = "" // Para almacenar el texto de búsqueda
+    @State private var searchText: String = ""
+    @State private var sortOrder: Bool = true
     
     let Color_Verde_Fuerte = Color(red: 0 / 255, green: 92 / 255, blue: 83 / 255)
     
@@ -340,10 +342,40 @@ struct ContentView: View {
                             }
                             .padding()
 
+                            
+                            // Botones para ordenar los precios
+                            HStack {
+                                Button(action: {
+                                    sortOrder = true // Ascendente
+                                }) {
+                                    Text("Ordenar Ascendente")
+                                        .padding()
+                                        .background(sortOrder ? Color.blue : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                }
+                                Button(action: {
+                                    sortOrder = false // Descendente
+                                }) {
+                                    Text("Ordenar Descendente")
+                                        .padding()
+                                        .background(!sortOrder ? Color.blue : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                }
+                            }
+                            .padding()
+
+
                             // Lista de resultados filtrados
                             List(
                                 gasStationCoordinates.filter {
                                     searchText.isEmpty || $0.title.localizedCaseInsensitiveContains(searchText)
+                                }
+                                .sorted { (station1, station2) in
+                                    let price1 = station1.prices[selectedFuelType] ?? 0.0
+                                    let price2 = station2.prices[selectedFuelType] ?? 0.0
+                                    return sortOrder ? price1 < price2 : price1 > price2
                                 }
                             ) { station in
                                 HStack {

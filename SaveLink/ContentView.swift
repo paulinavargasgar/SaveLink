@@ -82,6 +82,93 @@ struct GasStationDetailView: View {
     }
 }
 
+struct UserProfileView: View {
+    let userPhoto: Image // Imagen del usuario
+    let username: String
+    let userReviews: [UserReview] // Opiniones realizadas por el usuario
+    @Binding var isPresented: Bool // Controla la presentación de la vista
+    @AppStorage("uid") var userID: String = "" // Para manejar la sesión del usuario
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                HStack {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundColor(.blue)
+                    }
+                    .padding(.leading)
+                    Spacer()
+                }
+                
+                // Foto del usuario
+                userPhoto
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .padding(.top, 20)
+
+                // Nombre del usuario
+                Text(username)
+                    .font(.title)
+                    .bold()
+                    .padding(.top, 10)
+
+                Divider()
+                    .padding(.vertical)
+
+                // Opiniones del usuario
+                Text("Opiniones Realizadas:")
+                    .font(.headline)
+                    .padding(.bottom, 5)
+
+                ScrollView {
+                    ForEach(userReviews) { review in
+                        VStack(alignment: .leading, spacing: 5) {
+                            HStack {
+                                Text("Calificación:")
+                                    .font(.subheadline)
+                                    .bold()
+                                Text("\(review.rating)/5 ⭐️")
+                                    .font(.subheadline)
+                            }
+                            Text(review.comment)
+                                .font(.body)
+                                .foregroundColor(.gray)
+                            Divider()
+                        }
+                        .padding(.bottom, 10)
+                    }
+                }
+                Spacer()
+
+                // Botón para cerrar sesión
+                Button(action: {
+                    userID = "" // Borra el ID del usuario almacenado
+                    isPresented = false // Cierra el perfil
+                }) {
+                    Text("Cerrar Sesión")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                }
+            }
+            .padding()
+            .navigationBarHidden(true) // Ocultar la barra de navegación
+        }
+    }
+}
+
+
 
 struct ContentView: View {
     
@@ -109,7 +196,7 @@ struct ContentView: View {
                                 gasStation: pin,
                                 globalRating: Double.random(in: 3.0...5.0),
                                 reviews: [
-                                    UserReview(username: "Juan Pérez", comment: "Buena atención y gasolina de calidad.", rating: 5),
+                                    UserReview(username: "Mauricio González", comment: "Buena atención y gasolina de calidad.", rating: 5),
                                     UserReview(username: "Ana López", comment: "Un poco caro, pero rápido servicio.", rating: 4),
                                     UserReview(username: "Carlos Gómez", comment: "Las bombas no funcionaban bien.", rating: 3)
                                 ]
@@ -136,7 +223,7 @@ struct ContentView: View {
                         HStack {
                             Spacer()
                             VStack {
-                                Text("Bienvenido, \(userID)")
+                                Text("Bienvenido, Mauricio")
                                     .padding(10)
                                     .background(Color_Verde_Fuerte)
                                     .foregroundColor(.white)
@@ -164,8 +251,17 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                             }
                             .sheet(isPresented: $showUserInfo) {
-                                UserInfoView(userID: userID, showUserInfo: $showUserInfo)
+                                UserProfileView(
+                                    userPhoto: Image("user_photo"), // Nombre del archivo de imagen del usuario en tu proyecto
+                                    username: "Mauricio González", // Nombre del usuario
+                                    userReviews: [
+                                        UserReview(username: "Mauricio González", comment: "Buena atención.", rating: 5),
+                                        UserReview(username: "Mauricio González", comment: "Servicio rápido.", rating: 4)
+                                    ],
+                                    isPresented: $showUserInfo
+                                )
                             }
+
                             Spacer()
                             Button(action: {
                                 withAnimation {

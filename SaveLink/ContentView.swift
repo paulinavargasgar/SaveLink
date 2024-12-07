@@ -181,6 +181,7 @@ struct ContentView: View {
     @State private var showUserInfo = false
     @State private var showMenu = false
     @State private var selectedFuelType: String = "Premium" // Premium por defecto
+    @State private var searchText: String = "" // Para almacenar el texto de búsqueda
     
     let Color_Verde_Fuerte = Color(red: 0 / 255, green: 92 / 255, blue: 83 / 255)
     
@@ -198,8 +199,21 @@ struct ContentView: View {
                                 reviews: [
                                     UserReview(username: "Mauricio González", comment: "Buena atención y gasolina de calidad.", rating: 5),
                                     UserReview(username: "Ana López", comment: "Un poco caro, pero rápido servicio.", rating: 4),
-                                    UserReview(username: "Carlos Gómez", comment: "Las bombas no funcionaban bien.", rating: 3)
-                                ]
+                                    UserReview(username: "Carlos Gómez", comment: "Las bombas no funcionaban bien.", rating: 3),     UserReview(username: "Ana López", comment: "Un poco caro, pero rápido servicio.", rating: 4),
+                                    UserReview(username: "Carlos Gómez", comment: "Las bombas no funcionaban bien.", rating: 3),
+                                    UserReview(username: "Sofía Martínez", comment: "Excelente ubicación y servicio rápido.", rating: 5),
+                                    UserReview(username: "Luis Fernández", comment: "El personal fue amable, pero había fila.", rating: 4),
+                                    UserReview(username: "Diana Pérez", comment: "Gasolina rendidora, pero podrían mejorar el mantenimiento.", rating: 4),
+                                    UserReview(username: "José Ramírez", comment: "Un poco caro, pero la calidad lo vale.", rating: 5),
+                                    UserReview(username: "Camila Torres", comment: "Servicio regular, pero accesible en precio.", rating: 3),
+                                    UserReview(username: "Pablo Ruiz", comment: "Gran atención al cliente y buenos precios.", rating: 5),
+                                    UserReview(username: "Lucía Gómez", comment: "Las instalaciones estaban limpias y organizadas.", rating: 4),
+                                    UserReview(username: "Fernando Castro", comment: "Gasolina de mala calidad, tuve problemas con mi coche.", rating: 2),
+                                    UserReview(username: "Gabriela Mendoza", comment: "Servicio muy lento, podrían mejorar.", rating: 3),
+                                    UserReview(username: "Javier Hernández", comment: "Los precios son competitivos y la atención rápida.", rating: 5),
+                                    UserReview(username: "Mariana Vargas", comment: "La experiencia fue buena, aunque un poco lento el servicio.", rating: 4),
+                                    UserReview(username: "Ricardo Ortega", comment: "Muy caro para la calidad ofrecida.", rating: 2)
+                                ].shuffled()
                             )) {
                                 VStack {
                                     Image("gas_station_logo")
@@ -280,9 +294,21 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.bottom)
                     }
                     .frame(maxHeight: .infinity, alignment: .bottom)
-                    
+                
+
                     if showMenu {
                         VStack {
+                            // Campo de texto para la búsqueda
+                            TextField("Buscar por dirección", text: $searchText)
+                                .padding()
+                                .background(Color(.systemGray6))
+                                .cornerRadius(8)
+                                .padding(.horizontal)
+                                .onChange(of: searchText) { newValue in
+                                    // Aquí podrías realizar más acciones, si es necesario
+                                }
+
+                            // Botones de selección de tipo de combustible
                             HStack {
                                 Button(action: {
                                     selectedFuelType = "Premium"
@@ -313,8 +339,13 @@ struct ContentView: View {
                                 }
                             }
                             .padding()
-                            
-                            List(gasStationCoordinates) { station in
+
+                            // Lista de resultados filtrados
+                            List(
+                                gasStationCoordinates.filter {
+                                    searchText.isEmpty || $0.title.localizedCaseInsensitiveContains(searchText)
+                                }
+                            ) { station in
                                 HStack {
                                     Text(station.title)
                                     Spacer()
@@ -325,12 +356,12 @@ struct ContentView: View {
                                     }
                                 }
                             }
-
                             .background(Color.white)
                             .cornerRadius(12)
                             .padding()
                             .shadow(radius: 5)
-                            
+
+                            // Botón para cerrar el menú
                             Button(action: {
                                 withAnimation {
                                     showMenu = false
@@ -348,6 +379,7 @@ struct ContentView: View {
                         }
                         .transition(.move(edge: .trailing))
                     }
+
                 }
                 .onAppear {
                     loadGasStations()
